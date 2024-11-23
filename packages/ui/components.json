@@ -7,13 +7,12 @@
     "config": "tailwind.config.ts",
     "css": "src/globals.css",
     "baseColor": "slate",
-    "cssVariables": true,
-    "prefix": "ui-"
+    "cssVariables": true
   },
   "aliases": {
     "components": "@repo/ui/components",
     "utils": "@repo/ui/lib/utils",
-    "ui": "@repo/ui/components/ui",
+    "ui": "@repo/ui/molecules",
     "lib": "@repo/ui/lib",
     "hooks": "@repo/ui/hooks"
   }
