@@ -1,0 +1,20 @@
+{
+  "name": "@ed-rio/lib",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "devDependencies": {
+    "@ed-rio/tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.61.3",
+    "axios": "^1.7.7",
+    "cookies-next": "^5.0.2",
+    "next": "15.0.0",
+    "nookies": "^2.5.2"
+  }
+}
