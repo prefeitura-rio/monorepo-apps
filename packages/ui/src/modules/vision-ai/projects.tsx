@@ -19,9 +19,6 @@ import { ToastHandler } from '../../utils/toast-handler'
 export function Projects() {
   const { data: projects, isPending, error } = useProjects()
 
-  console.log({ error })
-  console.log({ projects })
-
   return (
     <div className="relative w-full shrink-0 h-screen max-h-screen px-4 py-2 flex flex-col gap-4">
       <ToastHandler />

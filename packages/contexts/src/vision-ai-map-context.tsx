@@ -25,7 +25,6 @@ import {
   type UseSchoolLayer,
   useSchoolLayer,
 } from '@ed-rio/hooks/use-map-layers/use-school-layer'
-import { useCameras } from '@ed-rio/hooks/use-queries/use-cameras'
 import { MapStyle } from '@ed-rio/types/others/map-style'
 import { createContext, useCallback, useState } from 'react'
 
@@ -67,8 +66,6 @@ export function VisionAIMapContextProvider({
   const [contextMenuPickingInfo, setContextMenuPickingInfo] =
     useState<PickingInfo | null>(null)
 
-  const { data: camerasData } = useCameras()
-
   const flyTo = useCallback((destination: Partial<MapViewState>) => {
     setViewState((currentViewState) => ({
       ...currentViewState,
@@ -78,7 +75,7 @@ export function VisionAIMapContextProvider({
     }))
   }, [])
 
-  const cameras = useCameraLayer(camerasData)
+  const cameras = useCameraLayer()
   const AISP = useAISPLayer()
   const CISP = useCISPLayer()
   const schools = useSchoolLayer()

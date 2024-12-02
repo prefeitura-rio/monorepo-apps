@@ -98,7 +98,6 @@ export default function ProjectDetails() {
   })
 
   useEffect(() => {
-    console.log('init')
     async function handleRedirect() {
       await setToastDataCookie({
         type: 'error',
@@ -109,7 +108,6 @@ export default function ProjectDetails() {
     }
 
     if (project && channels && cameras) {
-      console.log('model', project.model)
       const channel = channels.find(
         (channel) => channel.id === project.discord_id,
       )

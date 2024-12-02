@@ -3,20 +3,18 @@
 import { VisionAIMapContext } from '@ed-rio/contexts/vision-ai-map-context'
 import { layers as layersEnum } from '@ed-rio/hooks/use-map-layers/types'
 import { Map as VisionAIMap } from '@ed-rio/ui/organisms/map/index'
-import { BusFront, School, Shield, Video } from 'lucide-react'
-import { useContext } from 'react'
-
 import type {
   ContextMenuLayer,
   LayerToggleMenuItem,
-} from '@/organisms/map/types'
+} from '@ed-rio/ui/organisms/map/types'
+import { BusFront, School, Shield, Video } from 'lucide-react'
+import { useContext } from 'react'
 
 interface MapProps {
   mapboxAccessToken: string
 }
 
 export default function Map({ mapboxAccessToken }: MapProps) {
-  console.log({ mapboxAccessToken })
   const {
     layers: {
       cameras: {

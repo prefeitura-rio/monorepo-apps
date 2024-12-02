@@ -30,7 +30,7 @@ export default function RadarDetections() {
   const filters = useSearchByRadarEnhancedResultDynamicFilter({
     data: enhancedDetections,
   })
-  console.log(error)
+
   const { data: remainingCredits } = useCortexRemainingCredits()
   const { data: creditsRequired } = useVehiclesCreditsRequired(
     detections?.map((item) => item.plate) || [],

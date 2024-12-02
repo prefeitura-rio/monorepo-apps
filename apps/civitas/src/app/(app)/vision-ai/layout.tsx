@@ -10,7 +10,6 @@ export default async function VisionAILayout({
 }: {
   children: ReactNode
 }) {
-  console.log({ env: config.mapboxAccessToken })
   return (
     <Layout mapboxAccessToken={config.mapboxAccessToken}>{children}</Layout>
   )

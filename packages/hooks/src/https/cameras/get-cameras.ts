@@ -5,7 +5,7 @@ import type { Camera, RawCamera } from '@ed-rio/types/models'
 
 export async function getCameras() {
   const response = await api.get<RawCamera[]>(
-    'https://gw.dados.rio/vision-ai-staging/camera',
+    'https://gw.dados.rio/civitas-staging/cameras-cor',
   )
 
   const cameras: Camera[] = response.data.map((camera) => ({

@@ -6,6 +6,7 @@ import { type Camera } from '@ed-rio/types/models/camera'
 import { useMemo, useState } from 'react'
 
 import cameraIconAtlas from '../assets/camera-icon-atlas.png'
+import { useCameras } from '../use-queries/use-cameras'
 
 export interface UseCameraLayer {
   id: string
@@ -17,10 +18,11 @@ export interface UseCameraLayer {
   setIsVisible: (isVisible: boolean) => void
   onIconClick: (camera: Camera) => void
 }
-export function useCameraLayer(cameras: Camera[] | undefined): UseCameraLayer {
+export function useCameraLayer(): UseCameraLayer {
   const id = 'cameras'
   const [selectedCameras, setSelectedCameras] = useState<Camera[]>([])
   const [isVisible, setIsVisible] = useState(true)
+  const { data: cameras } = useCameras()
 
   function onIconClick(camera: Camera) {
     const selectedObject = selectedCameras.find((c) => c.id === camera.id)
@@ -41,7 +43,7 @@ export function useCameraLayer(cameras: Camera[] | undefined): UseCameraLayer {
         autoHighlight: true,
         highlightColor: [7, 76, 128, 250], // CIVITAS-dark-blue
         visible: isVisible,
-        iconAtlas: cameraIconAtlas,
+        iconAtlas: cameraIconAtlas.src,
         iconMapping: {
           default: {
             x: 0,
@@ -65,6 +67,12 @@ export function useCameraLayer(cameras: Camera[] | undefined): UseCameraLayer {
 
           return 'default'
         },
+        // getIcon: () => ({
+        //   url: busFront.src,
+        //   width: 48,
+        //   height: 48,
+        //   mask: false,
+        // }),
         getPosition: (d) => [d.longitude, d.latitude],
       }),
 

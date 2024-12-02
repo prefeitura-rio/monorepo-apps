@@ -30,7 +30,7 @@ export interface UseBusStopLayer {
 }
 
 export function useBusStopLayer(): UseBusStopLayer {
-  const id = 'BusStop'
+  const id = 'BusStops'
   const [data, setData] = useState<BusStop[]>([])
   const [isVisible, setIsVisible] = useState(false)
 
@@ -64,7 +64,7 @@ export function useBusStopLayer(): UseBusStopLayer {
         getSize: 24,
         visible: isVisible,
         getIcon: () => ({
-          url: busFront,
+          url: busFront.src,
           width: 48,
           height: 48,
           mask: false,
