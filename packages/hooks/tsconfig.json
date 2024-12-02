@@ -1,0 +1,18 @@
+{
+  "extends": "@ed-rio/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "noImplicitAny": false,
+    "downlevelIteration": true,
+  },
+  "include": [
+    ".",
+    "**.js",
+    "**.ts",
+    "src/**/*",
+  ],
+  "exclude": ["dist", "build", "node_modules"],
+  
+}
