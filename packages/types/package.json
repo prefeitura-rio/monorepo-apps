@@ -1,0 +1,14 @@
+{
+  "name": "@ed-rio/types",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./models": "./src/models/index.ts",
+    "./models/*": "./src/models/*.d.ts",
+    "./others/*": "./src/others/*.ts"
+  },
+  "devDependencies": {
+    "@ed-rio/tsconfig": "workspace:*",
+    "typescript": "5.7.2"
+  }
+}
