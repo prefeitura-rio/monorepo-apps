@@ -1,0 +1,36 @@
+{
+  "conventionalCommits.scopes": [
+    "Auth",
+    "Home",
+    "Veículos",
+    "Pessoas",
+    "Ocorrências",
+    "Operações",
+    "Monitoramento",
+    "Sidebar",
+    "Dashboard",
+    "Changelog",
+    "Playground",
+  ],
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "editor.tabSize": 2,
+  "emmet.syntaxProfiles": {
+    "javascript": "jsx"
+  },
+  "javascript.suggest.autoImports": true,
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.tsserver.log": "off",
+  "files.associations": {
+    ".sequelizerc": "javascript",
+    ".stylelintrc": "json",
+    "*.tsx": "typescriptreact",
+    ".env.*": "dotenv",
+    ".prettierrc": "json"
+  },
+}
