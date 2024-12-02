@@ -20,7 +20,10 @@ export interface UpdateProjectProps {
 }
 
 export async function updateProject(props: UpdateProjectProps) {
-  const response = await api.put<Project>(`/project/${props.id}`, props)
+  const response = await api.put<Project>(
+    `https://gw.dados.rio/vision-ai-staging/project/${props.id}`,
+    props,
+  )
 
   return response.data
 }

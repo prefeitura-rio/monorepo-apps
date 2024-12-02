@@ -20,7 +20,10 @@ export interface CreateProjectProps {
 }
 
 export async function createProject(props: CreateProjectProps) {
-  const response = await api.post<Project>('/project', props)
+  const response = await api.post<Project>(
+    'https://gw.dados.rio/vision-ai-staging/project',
+    props,
+  )
 
   return response.data
 }
