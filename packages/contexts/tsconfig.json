@@ -1,0 +1,23 @@
+{
+  "extends": "@ed-rio/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "noImplicitAny": false,
+    "downlevelIteration": true,
+    "outDir": "./dist",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "declaration": true,
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*",
+  ],
+  "exclude": ["node_modules", "dist"]
+  
+}

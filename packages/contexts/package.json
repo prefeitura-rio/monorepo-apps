@@ -1,0 +1,26 @@
+{
+  "name": "@ed-rio/contexts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./vision-ai-map-context": "./src/vision-ai-map-context.tsx"
+  },
+  "devDependencies": {
+    "@deck.gl/core": "^9.0.35",
+    "@deck.gl/react": "^9.0.35",
+    "@ed-rio/tsconfig": "workspace:*",
+    "@ed-rio/types": "workspace:*",
+    "@types/react": "^18.3.12",
+    "geojson": "^0.5.0",
+    "typescript": "5.7.2"
+  },
+  "dependencies": {
+    "@ed-rio/hooks": "workspace:*",
+    "@deck.gl/layers": "^9.0.35",
+    "@ed-rio/lib": "workspace:*",
+    "@tanstack/react-query": "^5.61.3",
+    "axios": "^1.7.7",
+    "react": "^18.3.1"
+  }
+}
