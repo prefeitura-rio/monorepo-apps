@@ -1,38 +1,36 @@
 import axios, { type AxiosError } from 'axios'
 import { deleteCookie } from 'cookies-next'
-import { parseCookies } from 'nookies'
 
-// import { queryClient } from './query-client'
 import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
 
 export const isApiError = axios.isAxiosError
 
 const isServer = () => {
-  console.log({window})
   return typeof window === 'undefined'
 }
 
-const cookies = parseCookies()
+// const cookies = parseCookies()
 
 export const api = axios.create({
   baseURL: "https://gw.dados.rio",
 })
 
-api.interceptors.request.use((request: axios.InternalAxiosRequestConfig) => {
-  const { 'token': accessToken } = cookies
-  console.log("DEBUG AXIOS")
+api.interceptors.request.use(async (request: axios.InternalAxiosRequestConfig) => {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('token')?.value
 
   if (accessToken) {
     request.headers.set('Authorization', `Bearer ${accessToken}`)
-    // config.headers['Content-Type'] = 'application/json'
   } else {
     if (isServer()) {
       redirect('/auth/sign-in')
     }
     else {
-      // window.location.href = '/auth/sign-in'
+      window.location.href = '/auth/sign-in'
     }
   }
+
   return request
 })
 
@@ -49,10 +47,10 @@ api.interceptors.response.use(
       if (statusCode === 401) {
         deleteCookie('token')
         if (isServer()) {
-          // redirect('/auth/sign-in')
+          redirect('/auth/sign-in')
         }
         else {
-          // window.location.href = '/auth/sign-in'
+          window.location.href = '/auth/sign-in'
         }
       }
     }

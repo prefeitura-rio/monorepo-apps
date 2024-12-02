@@ -1,9 +1,8 @@
 import type { PickingInfo } from '@deck.gl/core'
 import type { CISP } from '@ed-rio/types/models/cisp'
+import { Separator } from '@ed-rio/ui/molecules/separator'
 import type { Feature, Geometry } from 'geojson'
 import { Phone, User } from 'lucide-react'
-
-import { Separator } from '../../../../../molecules/separator'
 
 const InfoItem = ({
   icon: Icon,

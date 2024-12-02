@@ -36,6 +36,8 @@ import {
   TableRow,
 } from '@ed-rio/ui/molecules/table'
 import { TimePicker } from '@ed-rio/ui/molecules/time-picker'
+import { setToastDataCookie } from '@ed-rio/ui/utils/cookie-handlers'
+import { redirectWrapper } from '@ed-rio/ui/utils/redirect-wrapper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { AlertCircle, Navigation, X } from 'lucide-react'
@@ -44,9 +46,6 @@ import { usePathname } from 'next/navigation'
 import { useContext, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-
-import { setToastDataCookie } from '#utils/cookie-handlers.js'
-import { redirectWrapper } from '#utils/redirect-wrapper.js'
 
 import { ChannelsManager } from './components/channels-manager'
 import {

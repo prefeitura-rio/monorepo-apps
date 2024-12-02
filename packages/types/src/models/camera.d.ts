@@ -6,3 +6,12 @@ export type Camera = {
   longitude: number
   streamingUrl: string
 }
+
+export type RawCamera = {
+  CameraCode: string
+  CameraName: string
+  CameraZone: string
+  Latitude: string
+  Longitude: string
+  Streamming: string
+}

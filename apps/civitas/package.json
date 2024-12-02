@@ -11,6 +11,10 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@ed-rio/hooks": "workspace:*",
+    "@ed-rio/lib": "workspace:*",
+    "@ed-rio/types": "workspace:*",
+    "@ed-rio/ui": "workspace:*",
     "@deck.gl/aggregation-layers": "^9.0.20",
     "@deck.gl/core": "^9.0.20",
     "@deck.gl/layers": "^9.0.20",

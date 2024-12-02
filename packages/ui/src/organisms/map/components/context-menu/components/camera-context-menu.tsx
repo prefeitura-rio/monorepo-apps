@@ -1,15 +1,14 @@
 'use client'
 
 import type { PickingInfo } from '@deck.gl/core'
+import { cn } from '@ed-rio/lib/utils'
 import type { Camera } from '@ed-rio/types/models/camera'
+import { Button } from '@ed-rio/ui/molecules/button'
+import { Separator } from '@ed-rio/ui/molecules/separator'
+import { Spinner } from '@ed-rio/ui/molecules/spinner'
 import { Fullscreen, Hash, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-
-import { cn } from '../../../../../lib/utils'
-import { Button } from '../../../../../molecules/button'
-import { Separator } from '../../../../../molecules/separator'
-import { Spinner } from '../../../../../molecules/spinner'
 
 const InfoItem = ({
   icon: Icon,

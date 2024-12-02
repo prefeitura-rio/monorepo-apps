@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     "./use-map-layers/*": "./src/use-map-layers/*.ts",
-    "./use-queries/*": "./src/use-queries/*.ts"
+    "./use-queries/*": "./src/use-queries/*.ts",
+    "./https/notification-channels/*": "./src/https/notification-channels/*.ts"
   },
   "devDependencies": {
     "@deck.gl/core": "^9.0.35",

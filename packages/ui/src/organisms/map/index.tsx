@@ -13,8 +13,6 @@ import { ContextMenu } from './components/context-menu/index'
 import { LayerToggleMenu } from './components/layer-toggle-menu/index'
 import type { ContextMenuLayer, LayerToggleMenuItem } from './types'
 
-export type { ContextMenuLayer, LayerToggleMenuItem } from './types'
-
 interface MapProps {
   mapboxAccessToken: string
   layers: LayersList

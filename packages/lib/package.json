@@ -5,16 +5,21 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
-    "./*": "./src/*.ts"
+    "./*": "./src/*.ts",
+    "./query-client-provider-wrapper": "./src/query-client-provider-wrapper.tsx"
   },
   "devDependencies": {
-    "@ed-rio/tsconfig": "workspace:*"
+    "@ed-rio/tsconfig": "workspace:*",
+    "@types/react": "^18.3.12"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.61.3",
     "axios": "^1.7.7",
+    "clsx": "^2.1.1",
     "cookies-next": "^5.0.2",
     "next": "15.0.0",
-    "nookies": "^2.5.2"
+    "nookies": "^2.5.2",
+    "react": "^18.3.1",
+    "tailwind-merge": "^2.5.5"
   }
 }

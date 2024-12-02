@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 
 import { isAuthenticated } from '@/auth/auth'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import { MonitoredPlatesContextProvider } from '@/contexts/monitored-plates-context'
 import { CustomQueryClientProvider } from '@/hooks/query-client-provider'
 
@@ -18,10 +19,12 @@ export default function AppLayout({
   return (
     <CustomQueryClientProvider>
       <MonitoredPlatesContextProvider>
-        <div className="flex min-h-screen w-full">
-          <Sidebar />
-          {children}
-        </div>
+        <TooltipProvider delayDuration={200} skipDelayDuration={0}>
+          <div className="flex min-h-screen w-full">
+            <Sidebar />
+            {children}
+          </div>
+        </TooltipProvider>
       </MonitoredPlatesContextProvider>
     </CustomQueryClientProvider>
   )

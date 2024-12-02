@@ -1,7 +1,7 @@
 import { VisionAIMapContextProvider } from '@ed-rio/contexts/vision-ai-map-context'
+import { QueryClientProviderWrapper } from '@ed-rio/lib/query-client-provider-wrapper'
 import { TooltipProvider } from '@ed-rio/ui/molecules/tooltip'
 
-import { QueryClientProviderWrapper } from '../../utils/query-client-provider-wrapper'
 import Map from './components/map'
 
 export function Layout({
@@ -12,7 +12,7 @@ export function Layout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="h-full w-full flex">
+    <div className="h-screen w-full flex">
       <QueryClientProviderWrapper>
         <TooltipProvider>
           <VisionAIMapContextProvider>

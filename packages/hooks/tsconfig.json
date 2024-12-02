@@ -11,7 +11,7 @@
     ".",
     "**.js",
     "**.ts",
-    "src/**/*",
+    "src/**/*", "../../apps/civitas/src/app/(app)/vision-ai/actions.ts",
   ],
   "exclude": ["dist", "build", "node_modules"],
   

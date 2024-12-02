@@ -1,5 +1,7 @@
 'use client'
 
+import { createNotificationChannel } from '@ed-rio/hooks/https/notification-channels/create-notification-channel'
+import { updateNotificationChannel } from '@ed-rio/hooks/https/notification-channels/update-notification-channel'
 import { useNotificationChannels } from '@ed-rio/hooks/use-queries/use-notification-channels'
 import { queryClient } from '@ed-rio/lib/query-client'
 import type { NotificationChannel } from '@ed-rio/types/models/notification-channel'
@@ -17,9 +19,6 @@ import {
 import { Check, Pencil, Plus, Trash2, X } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { toast } from 'sonner'
-
-import { createNotificationChannel } from '#modules/vision-ai/http/notification-channel/create-notification-channel.js'
-import { updateNotificationChannel } from '#modules/vision-ai/http/notification-channel/update-notification-channel.js'
 
 export function ChannelsTable() {
   const { data: channels } = useNotificationChannels()
