@@ -1,0 +1,583 @@
+'use client'
+
+import { VisionAIMapContext } from '@ed-rio/contexts/vision-ai-map-context'
+import { useModels } from '@ed-rio/hooks/use-queries/use-models'
+import { useNotificationChannels } from '@ed-rio/hooks/use-queries/use-notification-channels'
+import { useProject } from '@ed-rio/hooks/use-queries/use-project'
+import { queryClient } from '@ed-rio/lib/query-client'
+import type { Project } from '@ed-rio/types/models/project'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@ed-rio/ui/molecules/breadcrumb'
+import { Button } from '@ed-rio/ui/molecules/button'
+import { Input } from '@ed-rio/ui/molecules/input'
+import { Label } from '@ed-rio/ui/molecules/label'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@ed-rio/ui/molecules/select'
+import { Spinner } from '@ed-rio/ui/molecules/spinner'
+import { Switch } from '@ed-rio/ui/molecules/switch'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@ed-rio/ui/molecules/table'
+import { TimePicker } from '@ed-rio/ui/molecules/time-picker'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
+import { AlertCircle, Navigation, X } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useContext, useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+
+import { setToastDataCookie } from '#utils/cookie-handlers.js'
+import { redirectWrapper } from '#utils/redirect-wrapper.js'
+
+import { ChannelsManager } from './components/channels-manager'
+import {
+  type ProjectForm,
+  projectFormSchema,
+} from './components/schemas/project-schema'
+import { updateProject } from './http/projects/update-project'
+
+export function UpdateProject() {
+  const {
+    layers: {
+      cameras: { setSelectedCameras, selectedCameras, cameras },
+    },
+    flyTo,
+  } = useContext(VisionAIMapContext)
+  const [isInitializingData, setIsInitializingData] = useState(true)
+  const pathname = usePathname()
+  const id = pathname.replace('/vision-ai/project/', '')
+
+  const {
+    data: channels,
+    isPending: isPendingChannels,
+    error: errorChannels,
+  } = useNotificationChannels()
+  const {
+    data: models,
+    isPending: isPendingModels,
+    error: errorModels,
+  } = useModels()
+  const { data: project, error: errorProject } = useProject(id)
+
+  const { mutateAsync: updateProjectFn, isPending: isPendingUpdate } =
+    useMutation(
+      {
+        mutationFn: updateProject,
+      },
+      queryClient,
+    )
+
+  const {
+    handleSubmit,
+    register,
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<ProjectForm>({
+    resolver: zodResolver(projectFormSchema),
+  })
+
+  useEffect(() => {
+    console.log('init')
+    async function handleRedirect() {
+      await setToastDataCookie({
+        type: 'error',
+        message: `O projeto de id=${id} não existe.`,
+      })
+
+      await redirectWrapper('/vision-ai')
+    }
+
+    if (project && channels && cameras) {
+      console.log('model', project.model)
+      const channel = channels.find(
+        (channel) => channel.id === project.discord_id,
+      )
+
+      if (!channel) {
+        toast.error(
+          'Canal de notificação não encontrado. Por favor, selecione um canal válido ou crie um novo.',
+        )
+      } else {
+        setValue('notificationChannelId', channel.id)
+      }
+
+      setValue('name', project.name)
+      setValue('model', project.model)
+      setValue('enabled', project.enable)
+      setValue('yolo_crowd_count', project.model_config?.yolo_crowd_count)
+      if (project.model_config?.yolo_default_precision) {
+        setValue(
+          'yolo_default_precision',
+          project.model_config.yolo_default_precision,
+        )
+      }
+
+      if (project.time_start) {
+        setValue('startTime', formatCurrentDateTime(project.time_start))
+      }
+      if (project.time_end) {
+        setValue('endTime', formatCurrentDateTime(project.time_end))
+      }
+
+      setSelectedCameras(
+        cameras.filter((camera) => project.cameras_id.includes(camera.id)),
+      )
+
+      setIsInitializingData(false)
+    }
+
+    if (
+      errorProject &&
+      errorProject.message === 'Request failed with status code 404'
+    ) {
+      handleRedirect()
+    }
+  }, [
+    cameras,
+    id,
+    setSelectedCameras,
+    setValue,
+    project,
+    channels,
+    errorProject,
+  ])
+
+  function formatCurrentDateTime(time: string) {
+    const today = new Date()
+
+    const utcTodayWithTimeStr = `${today.toISOString().split('T')[0]}T${time}`
+
+    const newDate = new Date(utcTodayWithTimeStr)
+
+    return newDate
+  }
+
+  async function onSubmit(data: ProjectForm) {
+    const channel = channels?.find(
+      (channel) => channel.id === data.notificationChannelId,
+    )
+    if (!channel) {
+      toast.error(
+        'Canal de notificação não encontrado. Por favor, selecione um canal válido ou crie um novo.',
+      )
+      return
+    }
+
+    const payload = {
+      id,
+      name: data.name,
+      model: data.model,
+      cameras_id: selectedCameras.map((camera) => camera.id),
+      enable: data.enabled,
+      discord_id: channel.id,
+      time_start: data.startTime?.toISOString().split('T')[1],
+      time_end: data.endTime?.toISOString().split('T')[1],
+      model_config: {
+        yolo_default_precision: data.yolo_default_precision,
+        yolo_send_message: data.yolo_send_message,
+        yolo_crowd_count: data.yolo_crowd_count,
+      },
+    } as Project
+
+    const updatedProject = await updateProjectFn(payload)
+
+    // Update Project cache
+    const projectCached = queryClient.getQueryData<Project>([
+      'project',
+      payload.id,
+    ])
+
+    if (!projectCached) {
+      return
+    }
+
+    queryClient.setQueryData<Project>(
+      ['project', payload.id],
+      payload as Project,
+    )
+
+    // Update Projects cache
+    const projectsCached = queryClient.getQueryData<Project[]>(['projects'])
+
+    if (!projectsCached) {
+      return
+    }
+
+    queryClient.setQueryData<Project[]>(
+      ['projects'],
+      projectsCached.map((p) =>
+        p.id === payload.id ? updatedProject : p,
+      ) as Project[],
+    )
+
+    redirectWrapper('/vision-ai')
+  }
+
+  return (
+    <form
+      className="flex flex-col gap-2 h-screen max-h-screen px-4 py-2"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="flex flex-col h-full">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/vision-ai">Projetos</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>
+                {isInitializingData ? (
+                  <div className="flex items-center gap-2">
+                    <span className="text-muted-foreground">Carregando...</span>
+                    <Spinner />
+                  </div>
+                ) : (
+                  project?.name
+                )}
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <h3 className="mt-4 mb-2 text-2xl font-bold">Editar Projeto</h3>
+
+        <div className="flex flex-col gap-4 h-full">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2 h-3.5">
+              <Label htmlFor="name">Nome</Label>
+              {errors.name && (
+                <span className="text-xs text-destructive">
+                  {errors.name.message}
+                </span>
+              )}
+            </div>
+            <Input
+              id="name"
+              {...register('name')}
+              disabled={isInitializingData || isPendingUpdate}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2 h-3.5">
+              <Label htmlFor="model">Modelo</Label>
+              {errors.model && (
+                <span className="text-xs text-destructive">
+                  {errors.model.message}
+                </span>
+              )}
+            </div>
+            <Controller
+              control={control}
+              name="model"
+              render={({ field }) => (
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue={project?.model}
+                  disabled={isInitializingData || isPendingUpdate}
+                >
+                  <SelectTrigger id="model" className="w-full">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {isPendingModels && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-muted-foreground">
+                            Carregando...
+                          </span>
+                          <Spinner />
+                        </div>
+                      )}
+                      {models && models.length === 0 && (
+                        <div className="w-full flex">
+                          <span className="w-full text-center text-muted-foreground">
+                            Nenhum modelo cadastrado
+                          </span>
+                        </div>
+                      )}
+                      {!isPendingModels && errorModels && (
+                        <div className="w-full flex items-center gap-2 text-destructive">
+                          <AlertCircle className="size-4" />
+                          <span className="text-sm">
+                            Erro ao carregar modelos. Recarregue a página e
+                            tente novamente.
+                          </span>
+                        </div>
+                      )}
+                      {models ? (
+                        models.map((model, index) => (
+                          <SelectItem key={index} value={model.model}>
+                            {model.model}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <Spinner />
+                      )}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2 h-3.5">
+              <Label htmlFor="notificationChannel">Canal de Notificação</Label>
+              {errors.notificationChannelId && (
+                <span className="text-xs text-destructive">
+                  {errors.notificationChannelId.message}
+                </span>
+              )}
+            </div>
+            <Controller
+              control={control}
+              name="notificationChannelId"
+              render={({ field }) => (
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue={project?.discord_id}
+                  disabled={isInitializingData || isPendingUpdate}
+                >
+                  <SelectTrigger id="notificationChannelId" className="w-full">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {channels && <ChannelsManager />}
+                      {isPendingChannels && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-muted-foreground">
+                            Carregando...
+                          </span>
+                          <Spinner />
+                        </div>
+                      )}
+                      {channels && channels.length === 0 && (
+                        <div className="w-full flex">
+                          <span className="w-full text-center text-muted-foreground">
+                            Nenhum canal cadastrado
+                          </span>
+                        </div>
+                      )}
+                      {!isPendingChannels && errorChannels && (
+                        <div className="w-full flex items-center gap-2 text-destructive">
+                          <AlertCircle className="size-4" />
+                          <span className="text-sm">
+                            Erro ao carregar canais. Recarregue a página e tente
+                            novamente.
+                          </span>
+                        </div>
+                      )}
+                      {channels?.map((channel, index) => (
+                        <SelectItem key={index} value={channel.id}>
+                          {channel.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-x-2 gap-y-4">
+            <div className={'flex flex-col gap-1'}>
+              <div className="flex items-center gap-2 h-3.5">
+                <Label htmlFor="precision">Precisão</Label>
+                {errors.yolo_default_precision && (
+                  <span className="text-xs text-destructive text-nowrap">
+                    {errors.yolo_default_precision.message}
+                  </span>
+                )}
+              </div>
+              <Input
+                type="number"
+                id="precision"
+                step={0.001}
+                {...register('yolo_default_precision', {
+                  valueAsNumber: true,
+                })}
+                disabled={isInitializingData || isPendingUpdate}
+              />
+            </div>
+            {watch('model') === 'CROWD' && (
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2 h-3.5">
+                  <Label htmlFor="yolo_crowd_count" className="text-nowrap">
+                    Tolerância de Pessoas
+                  </Label>
+                  {errors.yolo_crowd_count && (
+                    <span className="text-xs text-destructive text-nowrap">
+                      Obrigatório
+                    </span>
+                  )}
+                </div>
+                <Input
+                  type="number"
+                  id="yolo_crowd_count"
+                  {...register('yolo_crowd_count')}
+                  disabled={isInitializingData || isPendingUpdate}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-0.5 flex items-center gap-2">
+            <Label htmlFor="active">Ativo</Label>
+            <Controller
+              control={control}
+              name="enabled"
+              render={({ field }) => (
+                <Switch
+                  id="enabled"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  disabled={isInitializingData || isPendingUpdate}
+                />
+              )}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="startTime">Horário de início</Label>
+              <Controller
+                control={control}
+                name="startTime"
+                render={({ field }) => (
+                  <div className="w-32 flex justify-start">
+                    <TimePicker
+                      value={field.value}
+                      defaultValue={field.value}
+                      onChange={field.onChange}
+                      clearButton
+                      showIcon={false}
+                      disabled={isInitializingData || isPendingUpdate}
+                    />
+                  </div>
+                )}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="startTime">Horário de fim</Label>
+              <Controller
+                control={control}
+                name="endTime"
+                render={({ field }) => (
+                  <div className="w-32 flex justify-start">
+                    <TimePicker
+                      value={field.value}
+                      defaultValue={field.value}
+                      onChange={field.onChange}
+                      clearButton
+                      showIcon={false}
+                      disabled={isInitializingData || isPendingUpdate}
+                    />
+                  </div>
+                )}
+              />
+            </div>
+          </div>
+
+          <div className="flex mt-4 flex-col gap-1 h-full">
+            <Label>Câmeras Selecionadas:</Label>
+            <div className="h-full relative overflow-y-auto">
+              <div className="absolute inset-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[100px]">ID</TableHead>
+                      <TableHead>Localidade</TableHead>
+                      <TableHead className="text-right" />
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {selectedCameras.map((camera, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="font-medium">
+                          {camera.id}
+                        </TableCell>
+                        <TableCell>{camera.name}</TableCell>
+                        <TableCell className="text-right flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            type="button"
+                            onClick={() =>
+                              flyTo({
+                                latitude: camera.latitude,
+                                longitude: camera.longitude,
+                                zoom: 16,
+                              })
+                            }
+                          >
+                            <Navigation className="shrink-0 size-4" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            type="button"
+                            onClick={() =>
+                              setSelectedCameras(
+                                selectedCameras.filter(
+                                  (c) => c.id !== camera.id,
+                                ),
+                              )
+                            }
+                          >
+                            <X className="size-3.5 shrink-0" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <Button
+          variant="secondary"
+          type="submit"
+          disabled={isInitializingData || isPendingUpdate}
+        >
+          Atualizar Projeto
+        </Button>
+        <Button
+          variant="ghost"
+          asChild
+          disabled={isInitializingData || isPendingUpdate}
+        >
+          <Link href="/vision-ai">Candelar Edição</Link>
+        </Button>
+      </div>
+    </form>
+  )
+}
