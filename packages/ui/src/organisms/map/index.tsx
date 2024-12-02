@@ -62,8 +62,10 @@ export function Map({
   function onLeftClick(e: MouseEvent) {
     e.preventDefault()
 
-    const y = e.clientY
-    const x = e.clientX
+    const rect = e.currentTarget.getBoundingClientRect()
+
+    const y = e.clientY - rect.top
+    const x = e.clientX - rect.left
 
     const info = deckRef.current?.pickObject({ x, y, radius: 0 })
     if (!info?.object) return
