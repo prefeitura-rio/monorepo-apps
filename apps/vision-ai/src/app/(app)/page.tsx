@@ -1,6 +1,5 @@
+import { Button } from '@ed-rio/ui/molecules/button'
 import Link from 'next/link'
-
-import { Button } from '@/components/ui/button'
 
 export default async function App() {
   return (

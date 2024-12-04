@@ -1,21 +1,16 @@
-import { VisionAIMapContextProvider } from '@/contexts/vision-ai/map-context'
+'use server'
+
+import { Layout } from '@ed-rio/ui/modules/vision-ai/layout'
+import type { ReactNode } from 'react'
+
 import { env } from '@/env'
 
-import Map from './components/map'
-
-export default async function Layout({
+export default async function VisionAILayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: {
+  children: ReactNode
+}) {
   return (
-    <div className="h-full w-full flex">
-      <VisionAIMapContextProvider>
-        <Map mapboxAccessToken={env.MAPBOX_ACCESS_TOKEN} />
-        <div className="w-[480px] shrink-0 grow-0 h-full space-y-4">
-          {children}
-        </div>
-      </VisionAIMapContextProvider>
-    </div>
+    <Layout mapboxAccessToken={env.MAPBOX_ACCESS_TOKEN}>{children}</Layout>
   )
 }

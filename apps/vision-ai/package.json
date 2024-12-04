@@ -10,6 +10,7 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@ed-rio/ui": "workspace:*",
     "@deck.gl/core": "^9.0.33",
     "@deck.gl/layers": "^9.0.33",
     "@deck.gl/mapbox": "^9.0.33",

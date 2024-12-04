@@ -309,6 +309,9 @@ importers:
       '@deck.gl/react':
         specifier: ^9.0.33
         version: 9.0.36(@deck.gl/core@9.0.36)(react-dom@19.0.0-rc-65a56d0e-20241020)(react@19.0.0-rc-65a56d0e-20241020)
+      '@ed-rio/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.53.2)
