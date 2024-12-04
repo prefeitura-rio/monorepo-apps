@@ -1,10 +1,8 @@
 import type { PickingInfo } from '@deck.gl/core'
+import { cn } from '@ed-rio/lib/utils'
 import type { School } from '@ed-rio/types/models/school'
+import { Separator } from '@ed-rio/ui/molecules/separator'
 import { Calendar, MapPin } from 'lucide-react'
-
-import { cn } from '@/lib/utils'
-
-import { Separator } from '../../../../../molecules/separator'
 
 export const Label = ({
   children,

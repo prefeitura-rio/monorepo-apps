@@ -1,6 +1,5 @@
+import { cn } from '@ed-rio/lib/utils'
 import React from 'react'
-
-import { cn } from '@/lib/utils'
 
 interface InputErrorProps {
   className?: string

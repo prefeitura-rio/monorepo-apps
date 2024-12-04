@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import { cn } from '@ed-rio/lib/utils'
 import type { CameraCOR } from '@/models/entities'
 
 interface CameraSelectCardProps {

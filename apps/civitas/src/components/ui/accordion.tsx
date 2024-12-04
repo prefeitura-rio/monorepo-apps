@@ -3,7 +3,7 @@
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@ed-rio/lib/utils'
 
 const Accordion = AccordionPrimitive.Root
 

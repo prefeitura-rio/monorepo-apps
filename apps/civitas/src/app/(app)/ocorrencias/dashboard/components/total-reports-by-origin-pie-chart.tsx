@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/chart'
 import { useReportsSearchParams } from '@/hooks/use-params/use-reports-search-params'
 import { getTimelineReports } from '@/http/reports/dashboard/get-timeline'
-import { cn } from '@/lib/utils'
+import { cn } from '@ed-rio/lib/utils'
 
 // const chartData = [
 //   { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },

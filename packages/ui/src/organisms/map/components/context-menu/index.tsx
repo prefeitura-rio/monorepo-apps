@@ -1,9 +1,9 @@
 'use client'
 
 import { type PickingInfo } from '@deck.gl/core'
+import { Popover, PopoverContent } from '@ed-rio/ui/molecules/popover'
 import { useState } from 'react'
 
-import { Popover, PopoverContent } from '../../../../molecules/popover'
 import { calculateTooltipAbsolutePosition } from '../../../../utils/calculate-tooltip-absolute-position'
 import type { ContextMenuLayer } from '../../types'
 

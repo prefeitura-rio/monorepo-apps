@@ -2,7 +2,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@ed-rio/lib/utils'
 
 import { GenerateReportButton } from './pdf-report/generate-report-button'
 import { Views } from './views'

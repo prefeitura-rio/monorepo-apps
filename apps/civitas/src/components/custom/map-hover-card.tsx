@@ -1,8 +1,8 @@
 'use client'
 import { type PickingInfo, WebMercatorViewport } from '@deck.gl/core'
+import { cn } from '@ed-rio/lib/utils'
 import type { ReactNode } from 'react'
 
-import { cn } from '@/lib/utils'
 import type {
   Agent,
   CameraCOR,

@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from '@ed-rio/lib/utils'
 import { Command as CommandPrimitive, useCommandState } from 'cmdk'
 import { X } from 'lucide-react'
 import * as React from 'react'
@@ -12,7 +13,6 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command'
-import { cn } from '@/lib/utils'
 
 export interface Option {
   value: string

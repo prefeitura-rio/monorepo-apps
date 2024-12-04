@@ -4,7 +4,7 @@ import { AlertTriangle, Building, History, MapPin } from 'lucide-react'
 
 import { Label, Value } from '@/components/custom/typography'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
+import { cn } from '@ed-rio/lib/utils'
 import type { Radar } from '@/models/entities'
 
 export function RadarInfo({

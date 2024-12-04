@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { getPlaces } from '@/http/mapbox/get-places'
-import { cn } from '@/lib/utils'
+import { cn } from '@ed-rio/lib/utils'
 import type { AddressMarker, SetViewportProps } from '@/models/utils'
 
 const searchFormSchema = z.object({

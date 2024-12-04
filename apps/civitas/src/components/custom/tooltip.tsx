@@ -1,3 +1,4 @@
+import { cn } from '@ed-rio/lib/utils'
 import type { ReactNode } from 'react'
 
 import {
@@ -6,7 +7,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { cn } from '@/lib/utils'
 
 interface TooltipProps {
   children: ReactNode

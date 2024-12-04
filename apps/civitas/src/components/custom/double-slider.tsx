@@ -1,11 +1,10 @@
 'use client'
 
+import { cn } from '@ed-rio/lib/utils'
 import * as SliderPrimitive from '@radix-ui/react-slider'
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
-
-const Slider = React.forwardRef<
+const DoubleSlider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(({ className, ...props }, ref) => (
@@ -34,6 +33,6 @@ const Slider = React.forwardRef<
     </SliderPrimitive.Thumb>
   </SliderPrimitive.Root>
 ))
-Slider.displayName = SliderPrimitive.Root.displayName
+DoubleSlider.displayName = SliderPrimitive.Root.displayName
 
-export { Slider }
+export { DoubleSlider }

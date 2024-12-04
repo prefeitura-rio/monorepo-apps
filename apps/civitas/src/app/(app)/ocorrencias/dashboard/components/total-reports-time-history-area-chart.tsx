@@ -25,7 +25,7 @@ import {
 import { useReportsSearchParams } from '@/hooks/use-params/use-reports-search-params'
 import { useReportFilterOptions } from '@/hooks/use-queries/use-report-filter-options'
 import { getTimelineReports } from '@/http/reports/dashboard/get-timeline'
-import { cn } from '@/lib/utils'
+import { cn } from '@ed-rio/lib/utils'
 
 interface TotalReportsTimeHistoryAreaChartProps {
   className?: string

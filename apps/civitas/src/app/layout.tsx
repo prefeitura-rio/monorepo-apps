@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import { Toaster } from '@/components/ui/sonner'
-import { cn } from '@/lib/utils'
+import { cn } from '@ed-rio/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 

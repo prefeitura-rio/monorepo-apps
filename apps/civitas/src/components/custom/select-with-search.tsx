@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from '@ed-rio/lib/utils'
 import { CheckIcon, ChevronsUpDown } from 'lucide-react'
 import { useState } from 'react'
 
@@ -17,7 +18,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { cn } from '@/lib/utils'
 import type { ComboboxOption } from '@/models/utils'
 
 interface SelectWithSearchProps {

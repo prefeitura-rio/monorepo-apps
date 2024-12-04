@@ -1,10 +1,9 @@
 'use client'
 
+import { cn } from '@ed-rio/lib/utils'
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
-import type { VariantProps } from 'class-variance-authority'
 import * as React from 'react'
 
-import { cn } from '@ed-rio/lib/utils'
 import { buttonVariants } from './button'
 
 const AlertDialog = AlertDialogPrimitive.Root
@@ -19,7 +18,7 @@ const AlertDialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Overlay
     className={cn(
-      'fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+      'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
       className,
     )}
     {...props}
@@ -99,19 +98,13 @@ const AlertDialogDescription = React.forwardRef<
 AlertDialogDescription.displayName =
   AlertDialogPrimitive.Description.displayName
 
-export interface AlertDialogActionProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-}
-
 const AlertDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
-  AlertDialogActionProps
->(({ className, variant, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
+>(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Action
     ref={ref}
-    className={cn(buttonVariants({ variant, className }))}
+    className={cn(buttonVariants(), className)}
     {...props}
   />
 ))

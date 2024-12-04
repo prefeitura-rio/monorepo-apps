@@ -1,12 +1,10 @@
 'use client'
 
-import '@/utils/date-extensions'
-
+import { cn } from '@ed-rio/lib/utils'
 import { format } from 'date-fns'
-import { Calendar as CalendarIcon, X } from 'lucide-react'
+import { Calendar as CalendarIcon } from 'lucide-react'
 import * as React from 'react'
 
-import { cn } from '@ed-rio/lib/utils'
 import { Button } from './button'
 import { Calendar } from './calendar'
 import { Popover, PopoverContent, PopoverTrigger } from './popover'
@@ -21,7 +19,6 @@ interface DatePickerProps {
   fromDate?: Date
   toDate?: Date
   disabled?: boolean
-  clearButton?: boolean
 }
 
 export function DatePicker({
@@ -32,44 +29,27 @@ export function DatePicker({
   fromDate,
   toDate,
   disabled = false,
-  clearButton = false,
 }: DatePickerProps) {
   return (
     <Popover>
-      <div className="relative">
-        <PopoverTrigger asChild>
-          <Button
-            variant={'outline'}
-            className={cn(
-              'w-full justify-start text-left font-normal',
-              !value && 'text-muted-foreground',
-              className,
-            )}
-            disabled={disabled}
-          >
-            <CalendarIcon className="mr-2 size-4 shrink-0" />
-            {value ? (
-              format(value, 'dd MMM, y HH:mm')
-            ) : (
-              <span>Escolha uma data</span>
-            )}
-          </Button>
-        </PopoverTrigger>
-        {clearButton && !!value && (
-          <Button
-            type="button"
-            onClick={() => {
-              onChange(undefined)
-            }}
-            className="absolute right-0 p-0"
-            size="icon"
-            variant="ghost"
-          >
-            <X className="shrink-0 size-3.5" />
-          </Button>
-        )}
-      </div>
-
+      <PopoverTrigger asChild>
+        <Button
+          variant={'outline'}
+          className={cn(
+            'w-full justify-start text-left font-normal',
+            !value && 'text-muted-foreground',
+            className,
+          )}
+          disabled={disabled}
+        >
+          <CalendarIcon className="mr-2 size-4 shrink-0" />
+          {value ? (
+            format(value, 'dd MMM, y HH:mm')
+          ) : (
+            <span>Escolha uma data</span>
+          )}
+        </Button>
+      </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
@@ -96,11 +76,7 @@ export function DatePicker({
                 disableFuture
                 value={value}
                 defaultValue={value}
-                onChange={(e) => {
-                  if (e) {
-                    onChange(e)
-                  }
-                }}
+                onChange={onChange}
                 disabled={!value}
               />
             </div>

@@ -15,7 +15,7 @@ import React, { useEffect, useRef } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Slider } from '@/components/custom/double-slider'
+import { DoubleSlider } from '@/components/custom/double-slider'
 import { InputError } from '@/components/custom/input-error'
 import { PlateWildcardsHelperInfo } from '@/components/custom/plate-wildcards-helper-info'
 import { Tooltip } from '@/components/custom/tooltip'
@@ -174,7 +174,7 @@ export function SearchByRadarForm() {
           name="duration"
           render={({ field }) => (
             <div className="w-full space-y-2 pt-6">
-              <Slider
+              <DoubleSlider
                 value={field.value}
                 onValueChange={(value) => {
                   if (value[0] > 0) field.onChange([0, value[1]])
@@ -200,7 +200,9 @@ export function SearchByRadarForm() {
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-full">
                 <MapPinIcon className="mr-2 size-4 shrink-0" />
-                Radares ({selectedObjects.length})
+                Radares ({
+                  selectedObjects.length
+                })
               </Button>
             </PopoverTrigger>
             <PopoverContent

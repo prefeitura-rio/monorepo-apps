@@ -1,5 +1,4 @@
-// src/components/multi-select.tsx
-
+import { cn } from '@ed-rio/lib/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 import {
   CheckIcon,
@@ -27,7 +26,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
 
 /**
  * Variants for the multi-select component to handle different styles.

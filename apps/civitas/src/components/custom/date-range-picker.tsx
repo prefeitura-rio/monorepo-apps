@@ -2,6 +2,7 @@
 
 import '@/utils/date-extensions'
 
+import { cn } from '@ed-rio/lib/utils'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon } from 'lucide-react'
@@ -16,7 +17,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
 
 import { TimePicker } from './time-picker'
 
