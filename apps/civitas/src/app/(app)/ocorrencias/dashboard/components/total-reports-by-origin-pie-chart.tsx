@@ -1,6 +1,7 @@
 'use client'
 
 // import { TrendingUp } from 'lucide-react'
+import { cn } from '@ed-rio/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import * as React from 'react'
 import { Label, Pie, PieChart } from 'recharts'
@@ -23,7 +24,6 @@ import {
 } from '@/components/ui/chart'
 import { useReportsSearchParams } from '@/hooks/use-params/use-reports-search-params'
 import { getTimelineReports } from '@/http/reports/dashboard/get-timeline'
-import { cn } from '@ed-rio/lib/utils'
 
 // const chartData = [
 //   { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },

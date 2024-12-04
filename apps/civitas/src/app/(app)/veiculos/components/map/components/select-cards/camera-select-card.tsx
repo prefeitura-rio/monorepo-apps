@@ -3,6 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import '@/utils/string-extensions'
 
+import { cn } from '@ed-rio/lib/utils'
 import { Fullscreen, X } from 'lucide-react'
 import Link from 'next/link'
 
@@ -14,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { cn } from '@ed-rio/lib/utils'
 import type { CameraCOR } from '@/models/entities'
 
 interface CameraSelectCardProps {

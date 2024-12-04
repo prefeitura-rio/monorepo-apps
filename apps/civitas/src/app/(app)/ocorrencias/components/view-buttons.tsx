@@ -1,8 +1,8 @@
 'use client'
+import { cn } from '@ed-rio/lib/utils'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@ed-rio/lib/utils'
 
 import { GenerateReportButton } from './pdf-report/generate-report-button'
 import { Views } from './views'

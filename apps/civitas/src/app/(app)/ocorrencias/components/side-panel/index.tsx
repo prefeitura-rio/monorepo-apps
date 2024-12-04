@@ -1,6 +1,7 @@
 'use client'
 import '@/utils/date-extensions'
 
+import { cn } from '@ed-rio/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FilterX, Search, Trash } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
@@ -14,7 +15,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useReportsSearchParams } from '@/hooks/use-params/use-reports-search-params'
 import { useReportFilterOptions } from '@/hooks/use-queries/use-report-filter-options'
-import { cn } from '@ed-rio/lib/utils'
 import type { GetReportsRequest } from '@/models/interfaces'
 
 interface SidePanelProps {

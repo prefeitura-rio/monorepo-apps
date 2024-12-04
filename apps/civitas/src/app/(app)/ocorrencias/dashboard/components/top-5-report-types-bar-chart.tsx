@@ -1,6 +1,7 @@
 'use client'
 
 // import { TrendingUp } from 'lucide-react'
+import { cn } from '@ed-rio/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts'
 
@@ -20,7 +21,6 @@ import {
 } from '@/components/ui/chart'
 import { useReportsSearchParams } from '@/hooks/use-params/use-reports-search-params'
 import { getTopSubtypes } from '@/http/reports/dashboard/get-top-subtypes'
-import { cn } from '@ed-rio/lib/utils'
 
 // const chartData = [
 //   { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },

@@ -1,10 +1,10 @@
+import { cn } from '@ed-rio/lib/utils'
 import { formatDate } from 'date-fns'
 import type { PickingInfo } from 'deck.gl'
 import { AlertTriangle, Building, History, MapPin } from 'lucide-react'
 
 import { Label, Value } from '@/components/custom/typography'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@ed-rio/lib/utils'
 import type { Radar } from '@/models/entities'
 
 export function RadarInfo({

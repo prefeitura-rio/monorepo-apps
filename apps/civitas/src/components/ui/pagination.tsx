@@ -1,11 +1,10 @@
+import { cn } from '@ed-rio/lib/utils'
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react'
-
-import { cn } from '@ed-rio/lib/utils'
 
 import { Button } from './button'
 

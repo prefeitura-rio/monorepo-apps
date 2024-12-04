@@ -1,8 +1,7 @@
 import axios, { type AxiosError } from 'axios'
 import { deleteCookie } from 'cookies-next'
-
-import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export const isApiError = axios.isAxiosError
 
@@ -13,26 +12,27 @@ const isServer = () => {
 // const cookies = parseCookies()
 
 export const api = axios.create({
-  baseURL: "https://gw.dados.rio",
+  baseURL: 'https://gw.dados.rio',
 })
 
-api.interceptors.request.use(async (request: axios.InternalAxiosRequestConfig) => {
-  const cookieStore = await cookies()
-  const accessToken = cookieStore.get('token')?.value
+api.interceptors.request.use(
+  async (request: axios.InternalAxiosRequestConfig) => {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('token')?.value
 
-  if (accessToken) {
-    request.headers.set('Authorization', `Bearer ${accessToken}`)
-  } else {
-    if (isServer()) {
-      redirect('/auth/sign-in')
+    if (accessToken) {
+      request.headers.set('Authorization', `Bearer ${accessToken}`)
+    } else {
+      if (isServer()) {
+        redirect('/auth/sign-in')
+      } else {
+        window.location.href = '/auth/sign-in'
+      }
     }
-    else {
-      window.location.href = '/auth/sign-in'
-    }
-  }
 
-  return request
-})
+    return request
+  },
+)
 
 api.interceptors.response.use(
   (response) => response,
@@ -48,8 +48,7 @@ api.interceptors.response.use(
         deleteCookie('token')
         if (isServer()) {
           redirect('/auth/sign-in')
-        }
-        else {
+        } else {
           window.location.href = '/auth/sign-in'
         }
       }

@@ -1,8 +1,7 @@
 'use client'
+import { cn } from '@ed-rio/lib/utils'
 import { Cctv, RectangleEllipsis } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
-
-import { cn } from '@ed-rio/lib/utils'
 
 enum SearchType {
   'RADAR' = 'RADAR',
