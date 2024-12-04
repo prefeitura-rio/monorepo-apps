@@ -70,17 +70,19 @@ export function Projects() {
         </div>
       </ScrollArea>
       <Tooltip>
-        <TooltipTrigger>
-          <Button
-            className="absolute right-0 bottom-2"
-            variant="secondary"
-            size="icon"
-            asChild
-          >
-            <Link href="/vision-ai/new-project">
-              <Plus className="size-4 shrink-0" />
-            </Link>
-          </Button>
+        <TooltipTrigger asChild>
+          <span tabIndex={0}>
+            <Button
+              className="absolute right-4 bottom-4"
+              variant="secondary"
+              size="icon"
+              asChild
+            >
+              <Link href="/vision-ai/new-project">
+                <Plus className="size-4 shrink-0" />
+              </Link>
+            </Button>
+          </span>
         </TooltipTrigger>
         <TooltipContent>Novo projeto</TooltipContent>
       </Tooltip>

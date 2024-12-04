@@ -1,13 +1,10 @@
+import tailwindConfig from '@ed-rio/ui/tailwind.config'
 import type { Config } from 'tailwindcss'
 
 const config = {
+  ...tailwindConfig,
   darkMode: ['class'],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
+  content: ['./src/**/*.{ts,tsx}', '../../packages/ui/src/**/*.{ts,tsx}'],
   prefix: '',
   theme: {
     container: {
