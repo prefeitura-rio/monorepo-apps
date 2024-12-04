@@ -10,7 +10,5 @@ export default async function VisionAILayout({
 }: {
   children: ReactNode
 }) {
-  return (
-    <Layout mapboxAccessToken={env.MAPBOX_ACCESS_TOKEN}>{children}</Layout>
-  )
+  return <Layout mapboxAccessToken={env.MAPBOX_ACCESS_TOKEN}>{children}</Layout>
 }
